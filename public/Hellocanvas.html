@@ -1,0 +1,29 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>hello</title>
+</head>
+
+<body>
+
+<canvas id="myCanvas">your browser does not support the canvas tag</canvas>
+
+<script type="text/javascript">
+
+var canvas=document.getElementById('myCanvas');
+var ctx=canvas.getContext('2d');
+ctx.fillStyle='#00E5EE';
+ctx.fillRect(50,50,500,500);
+
+var c=document.getElementById("myCanvas");
+var ctx=c.getContext("2d");
+ctx.fillStyle="#CD3333";
+cxt.beginPath();
+cxt.arc(50,30,20,0,Math.PI*2,true);
+cxt.closePath();
+cxt.fill();
+
+</script>
+
+</body>
+</html>
