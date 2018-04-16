@@ -1,151 +1,200 @@
-<!DOCTYPE html>
 <html>
-<title>
-    最佳工作序列
-</title>
-<body>
-  
-</body>
-<head> 
-<meta charset="utf-8">
-<script type="text/javascript">
-       var work=[{ID:1, Time:4 ,Deadline:10,worth:2},
-                 {ID:2, Time:3 ,Deadline:8,worth:3},
-                 {ID:3, Time:2 ,Deadline:4,worth:3},
-                 {ID:4, Time:1 ,Deadline:2,worth:6} ]
-
-     for(var i=0;i<4;i++)   //只有一个工作组的情况
-     {
-       document.write("工作序列："+work[i].ID+"</br>");
-       var leftworth1=new Array();
-       leftworth1[i]=14-work[i].worth;
-       document.write("价值："+work[i].worth+" 剩余价值："+leftworth1[i]+" 工时："+work[i].Time+" 期限："+work[i].Deadline+"</br>");
-      }   
-
-       var worth2=new Array();
-       var leftworth2=new Array();
-       var time2=new Array();
-       var deadline2=new Array();
-       var m=0;
-      for(var j=0;j<3;j++)   //有两个工作组的情况
-      {
-         for(var k=j+1;k<4;k++ )
-         {
-            document.write("工作序列："+work[j].ID+" "+work[k].ID+"</br>");
-            worth2[m]=work[j].worth+work[k].worth;  //价值
-            leftworth2[m]=14-worth2[m];   //剩余价值
-
-            if(work[j].Time<work[k].time)
-            time2[m]=work[k].Time;
-            else
-            time2[m]=work[j].Time;    //工时
-
-            if(work[j].Deadline<work[k].Deadline)
-            deadline2[m]=work[j].Deadline;
-            else
-            deadline2[m]=work[k].Deadline;  //期限
-
-            document.write("价值："+worth2[m]+" 剩余价值："+leftworth2[m]+" 工时:"+time2[m]+" 期限："+deadline2[m]+"</br>");
-            m++; 
-         }
-      }
-
-      var worth3=new Array();
-      var leftworth3=new Array();
-      var time3=new Array();
-      var deadline3=new Array();
-      var n=0;
-      for(var i=0;i<2;i++)    //有三个工作组的情况
-      {
-          for(var j=i+1;j<3;j++)
-          {
-              for(var k=j+1;k<4;k++)
-              {
-                document.write("工作序列："+work[i].ID+" "+work[j].ID+" "+work[k].ID+"</br>");
-                worth3[n]=work[i].worth+work[j].worth+work[k].worth;  //价值
-                leftworth3[n]=14-worth3[n];   //剩余价值
-                if(work[i].Time<work[j].Time)
-                {
-                    time3[n]=work[j].Time;
-                }
-                else if(work[i].Time<work[k].Time)
-                {
-                    time3[n]=work[k].Time;
-                }
-                else
-                time3[n]=work[i].Time;    //工时
-
-                if(work[i].Deadline<work[j].Deadline)
-                {
-                    deadline3[n]=work[j].Deadline;
-                }
-                else if(work[i].Deadline<work[k].Deadline)
-                {
-                    deadline3[n]=work[k].Deadline;
-                }
-                else
-                deadline3[n]=work[i].Deadline;   //期限
-                document.write("价值："+worth3[n]+" 剩余价值："+leftworth3[n]+" 工时:"+time3[n]+" 期限："+deadline3[n]+"</br>");
-              }
-          }
-      }
-
-      var worth4=new Array();
-      var leftworth4=new Array();
-      var time4=new Array();
-      var deadline4=new Array();
-      var q=0;
-
-      for(var i=0;i<1;i++)    //有四个工作组的情况
-      {
-          for(var j=i+1;j<2;j++)
-          {
-              for(var k=j+1;k<3;k++)
-              {
-                  for(var p=k+1;p<4;p++)
-                  {
-                    document.write("工作序列："+work[i].ID+" "+work[j].ID+" "+work[k].ID+" "+work[p].ID+"</br>");
-                    worth4[q]=work[i].worth+work[j].worth+work[k].worth+work[p].worth;  //价值
-                    leftworth4[q]=14-worth4[q];   //剩余价值
-                    if(work[i].Time<work[j].Time)
-                     {
-                       time4[q]=work[j].Time;
-                     }
-                    else if(work[i].Time<work[k].Time)
-                     {
-                       time4[q]=work[k].Time;
-                     }
-                     else if(work[i].Time<work[p].Time)
-                     {
-                        time4[q]=work[p].Time;
-                     }
-                     else
-                     time4[q]=work[i].Time;      //工时
-
-                     if(work[i].Deadline<work[j].Deadline)
-                     {
-                        deadline4[q]=work[j].Deadline;
-                     }
-                    else if(work[i].Deadline<work[k].Deadline)
-                     {
-                        deadline4[q]=work[k].Deadline;
-                     }
-                     else if(work[i].Deadline<work[p].Deadline)
-                     {
-                        deadline4[q]=work[p].Deadline;
-                     }
-                     else
-                     deadline4[q]=work[i].Deadline;      //期限
-                  
-                    document.write("价值："+worth4[q]+" 剩余价值："+leftworth4[q]+" 工时:"+time4[q]+" 期限："+deadline4[q]+"</br>");
-                  }
-                
-              }
-          }
-      }
-
-
-</script>
-
+<head>
 </head>
+
+<body>
+        <script>
+                var n,id,time,profit,deadline,Maxdeadline;
+                var Work = new Array();	//创建用于计算的数组
+                var Value = new Array();//创建用于比值的数组
+            
+                for(var i=0;i<200;i+=1)//创建二维虚拟数组
+                {	
+                    Value[i] = new Array();
+                    for(var j=0;j<200;j+=1)
+                        Value[i][j] = 0;
+                }
+                
+                function GetMaxDeadline()//getDDL
+                {
+                    var max = 0;
+                    for (var i = 0; i < n; i+=1)
+                    {
+                        if (Work[i].deadline > max)
+                            max = Work[i].deadline;
+                    }	
+                    return max;
+                }
+                
+                function max(a,b)//创建比较最大值的函数
+                {
+                    if (a >= b)
+                        return a;
+                    else return b;
+                }
+                
+                
+                function ArrangeWork()//创建排序工作的函数
+                {
+                
+                    Maxdeadline = GetMaxDeadline();//填表,其中第一行和第一列全为0  
+                    for (var i = 0; i <= n; i+=1)
+                        Value[i][0] = 0;
+                    for (var j = 0; j <= Maxdeadline; j+=1)
+                        Value[0][j] = 0;
+                    for (var i = 1; i <= n; i+=1)
+                    {
+                        for (var j = 1; j <= Maxdeadline; j+=1)
+                        {
+                            if (j >= Work[i - 1].time && Value[i - 1][j - Work[i - 1].time] + Work[i - 1].profit > Value[i - 1][j])
+                            {
+                                if (j <= Work[i - 1].deadline)
+                                    Value[i][j] = Value[i - 1][j - Work[i - 1].time] + Work[i - 1].profit;
+                                else
+                                    Value[i][j] = Value[i][j - 1];
+                            }
+                            else
+                            {
+                                Value[i][j] = Value[i - 1][j];
+                            }
+                        }
+                    }
+                    
+                    var result = new Array(n+1);//创建序列数组，计算工作序列
+                    var j = Maxdeadline;
+                    for (var i = n; i > 0; i-=1)
+                    {
+                        if (Value[i][j] > Value[i - 1][j])
+                        {
+                            result[i - 1] = 1;
+                            j = j - Work[i - 1].time;
+                        }
+                        else
+                        {	
+                            result[i-1] = 0;
+                        }
+                    }
+                    
+                    document.getElementById('result').style.display="block";
+                    
+                    str = "<br/><a>Optimum working sequence is:";//输出最佳序列和总价值
+                    for (var i = 0; i < n; i+=1)
+                    {
+                        if (result[i])
+                        {
+                            str += Work[i].id + "  ";
+                        }
+                    }
+                    str += '</a><br/> <br/>';
+                    str += "<a>Sum of Values is:";
+                    str += Value[n][Maxdeadline].toString();
+                    str += "</a>"
+                    document.getElementById('result').innerHTML  = str;
+                }
+                
+                function GetValue()//输入并传递数值
+                {
+                
+                    if(document.getElementById('n').value!="")
+                        n = parseInt(document.getElementById('n').value);
+                    else
+                    {
+                        alert('Wrong！');
+                        return;
+                    }
+                    if(document.getElementById('id').value!="")
+                    {
+                        id0 = document.getElementById('id').value;
+                        id = id0.split(',')
+                    }
+                    else
+                    {
+                        alert('Wrong！');
+                        return;
+                    }
+                    
+                    if(document.getElementById('time').value!="")
+                    {
+                        time0 = document.getElementById('time').value;
+                        time = time0.split(',');
+                    }
+                    else
+                    {
+                        alert('Wrong！');
+                        return;
+                    }
+                    
+                    if(document.getElementById('deadline').value!="")
+                    {
+                        deadline0 = document.getElementById('deadline').value;
+                        deadline = deadline0.split(',');
+                    }
+                    else
+                    {
+                        alert('Wrong！');
+                        return;
+                    }
+                    
+                    if(document.getElementById('profit').value!="")
+                    {
+                        profit0 = document.getElementById('profit').value;
+                        profit = profit0.split(',');
+                    }
+                    else
+                    {
+                        alert('Wrong！');
+                        return;
+                    }
+                    
+                    for(var i=0;i<n;i+=1)
+                    {
+                        var temp = 	{'id':id[i],'time':parseInt(time[i]),'deadline':parseInt(deadline[i]),'profit':parseInt(profit[i])};
+                        Work[i] = temp;
+                    }
+                    
+                    Work.sort(function(a,b)//对Work进行排序
+                    {
+                        if (a.deadline < b.deadline)
+                            return -1;
+                        else if (a.deadline == b.deadline)
+                        {
+                            if (a.time < b.time)
+                                return -1;
+                            else return 1;
+                        }
+                        else
+                            return 1;
+                    })
+                    
+                }
+            </script>
+
+        <div align="center"> 
+        <h2>Optimum working sequence</h2>
+        Ps: Divide with ",".
+        <br><br>
+		Please input the quantity of works：
+        <input type="text" id="n">
+        <br><br>
+		Please input the id of works:
+        <input type="text" id="id">
+        <br><br>
+		Please input consumed time of works:
+        <input type="text" id="time">
+        <br><br>
+		Please input DDL of works:
+		<input type="text" id="deadline">
+        <br><br>
+		Please input the value of works:
+        <input type="text" id="profit">
+        <br><br>
+
+<button type="button" onclick = "GetValue();ArrangeWork();" style="width:100px;height:40px;margin-top:15px; border:1px solid; background:#FFF; font-size:14px">START!</button>
+
+</div>
+<div align="center"> 
+<div id = "result" style="display:none;text-align:center;background-color:#F0F0F0;width:540px;height:100px;margin-top:30px;">
+</div>
+
+<body>
 </html>
